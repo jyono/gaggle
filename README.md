@@ -1,5 +1,5 @@
 # gaggle
-
+![gaggle image](https://p1.pxfuel.com/preview/577/272/868/gaggle-of-geese-canada-goose-waterfowl-bird.jpg)
 
 ### Dev workflow
 Don't commit directly to the main branch. This can cause conflicts and confusions. Instead, we will make feature branches and make pull requests to merge them into the main branch. 
