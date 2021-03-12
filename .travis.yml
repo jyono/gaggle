@@ -9,4 +9,12 @@ before_install:
 script:
   - docker run -e CI=true gaggle npm run test
 
-
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "gaggle"
+  env: "Gaggle-env"
+  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
+  bucket_path: "gaggle"
+  on:
+    branch: master
