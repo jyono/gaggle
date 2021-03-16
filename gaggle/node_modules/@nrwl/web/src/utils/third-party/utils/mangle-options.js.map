@@ -1,0 +1,1 @@
+{"version":3,"file":"mangle-options.js","sourceRoot":"","sources":["../../../../../../../packages/web/src/utils/third-party/utils/mangle-options.ts"],"names":[],"mappings":";;;AAAA;;;;;;GAMG;AACH,MAAM,cAAc,GAAG,OAAO,CAAC,GAAG,CAAC,iBAAiB,CAAC,CAAC;AACzC,QAAA,gBAAgB,GAC3B,CAAC,CAAC,cAAc;IAChB,CAAC,cAAc,KAAK,GAAG,IAAI,cAAc,CAAC,WAAW,EAAE,KAAK,OAAO,CAAC,CAAC"}

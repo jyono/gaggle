@@ -1,0 +1,1 @@
+{"version":3,"file":"update-8-10-0.js","sourceRoot":"","sources":["../../../../../../packages/cypress/src/migrations/update-8-10-0/update-8-10-0.ts"],"names":[],"mappings":";;AAAA,+CAA2E;AAE3E,+BAA4B;AAC5B,2DAAmD;AAEnD,kBAAe,GAAG,EAAE;IAClB,OAAO,kBAAK,CAAC;QACX,uCAA2B,CACzB,WAAI,CAAC,SAAS,EAAE,0BAA0B,CAAC,EAC3C,QAAQ,CACT;QACD,uBAAW,EAAE;KACd,CAAC,CAAC;AACL,CAAC,CAAC"}
