@@ -1,6 +1,0 @@
-import { Tree } from '@nrwl/tao/src/shared/tree';
-/**
- * Formats all the created or updated files using Prettier
- * @param host - the file system tree
- */
-export declare function formatFiles(host: Tree): Promise<void>;
