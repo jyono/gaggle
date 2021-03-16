@@ -23,7 +23,9 @@
     "update": "nx migrate latest",
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "start-gaggle": "nx serve gaggle --port=4001",
+    "start-api": "nx serve api"
   },
   "private": true,
   "dependencies": {

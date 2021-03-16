@@ -37,8 +37,6 @@ services:
     volumes:
       - ./apps/api:/gaggle/apps/api
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
       - PGUSER=postgres
       - PGHOST=postgres
       - PGDATABASE=postgres
@@ -46,7 +44,7 @@ services:
       - PGPORT=5432
     ports:
     - '4000:4000'
-    command: ['node', 'dist/api/main.js']
+    command: ['npm', 'run', 'start-api']
   gaggle:
     stdin_open: true
     build:
@@ -58,4 +56,5 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     ports:
-      - '4001:4001'
+    - '4001:4001'
+    command: [ 'npm', 'run', 'start-gaggle' ]
