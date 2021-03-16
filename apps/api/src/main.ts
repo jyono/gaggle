@@ -9,7 +9,7 @@ app.get('/api', (req, res) => {
   res.send(greeting);
 });
 
-const port = process.env.port || 3333;
+const port = process.env.port || 4000;
 const server = app.listen(port, () => {
   console.log('Listening at http://localhost:' + port + '/api');
 });

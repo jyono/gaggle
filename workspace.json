@@ -93,32 +93,6 @@
         }
       }
     },
-    "gaggle-e2e": {
-      "root": "apps/gaggle-e2e",
-      "sourceRoot": "apps/gaggle-e2e/src",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/gaggle-e2e/cypress.json",
-            "tsConfig": "apps/gaggle-e2e/tsconfig.e2e.json",
-            "devServerTarget": "gaggle:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "gaggle:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/gaggle-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    },
     "api": {
       "root": "apps/api",
       "sourceRoot": "apps/api/src",

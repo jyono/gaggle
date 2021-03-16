@@ -26,10 +26,6 @@
     "gaggle": {
       "tags": []
     },
-    "gaggle-e2e": {
-      "tags": [],
-      "implicitDependencies": ["gaggle"]
-    },
     "api": {
       "tags": []
     },

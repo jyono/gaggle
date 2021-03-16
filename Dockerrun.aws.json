@@ -1,0 +1,33 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "gaggle",
+      "image": "TODO",
+      "hostname": "gaggle",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "api",
+      "image": "TODO",
+      "hostname": "api",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "nginx",
+      "image": "TODO",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["gaggle", "api"],
+      "memory": 128
+    }
+  ]
+}
