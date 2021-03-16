@@ -3,11 +3,10 @@ services:
   - docker
 
 before_install:
-  - cd frontend
   - docker build -t gaggle -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true gaggle npm run test
+  - docker run -e CI=true gaggle nx run-many --target=test --all
 
 deploy:
   provider: elasticbeanstalk
