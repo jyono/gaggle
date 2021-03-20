@@ -1,27 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { Message } from '@gaggle/api-interfaces';
+import React from 'react';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-export const App = () => {
-  const [m, setMessage] = useState<Message>({ message: '' });
+import Login from "./components/login.component";
+import SignUp from "./components/signup.component";
 
-  useEffect(() => {
-    fetch('/api')
-      .then((r) => r.json())
-      .then(setMessage);
-  }, []);
+function App() {
+  return (<Router>
+    <div className="App">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+        <div className="container">
+          <Link className="navbar-brand" to={"/sign-in"}>Gaggle</Link>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to={"/sign-in"}>Login</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
-  return (
-    <>
-      <div style={{ textAlign: 'center' }}>
-        <h1>Welcome to gaggle!</h1>
-        <img
-          width="450"
-          src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-        />
+      <div className="auth-wrapper">
+        <div className="auth-inner">
+          <Switch>
+            <Route exact path='/' component={Login} />
+            <Route path="/sign-in" component={Login} />
+            <Route path="/sign-up" component={SignUp} />
+          </Switch>
+        </div>
       </div>
-      <div>{m.message}</div>
-    </>
+    </div></Router>
   );
-};
+}
 
 export default App;
