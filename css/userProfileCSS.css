@@ -1,0 +1,94 @@
+body{
+	background-color: #F6F6F6;
+}
+.header li{
+	text-decoration: none;
+	display: inline;
+	list-style:none;
+	display: inline;
+	border-style: none none none solid;
+	border-width: 1px;
+	border-color: #00a7c0;
+	border-collapse: collapse;
+	margin: 0; 
+	padding: 0;
+}
+.header *{
+	margin: 0;
+	padding: 0;
+}
+.header li a{
+	text-decoration: none;
+}
+.header img{
+	width: 20px;
+}
+
+.headerRight{
+	align-self: right;
+	float: right;
+	display: inline;
+	
+}
+.headerLeft{
+	float: left;
+	display: inline;
+	width: 50%;
+}
+.header{
+	font-size: 20px;
+	font-weight: bold;
+	height: 20px;
+	background-color:#DCF8FD;
+}
+.profilePicture{
+  width:15%;
+  height: 100%;
+}
+.basicInformation{
+  width:100%;
+  background-color: lavender;
+}
+.nameAndEmail{
+  height: 100%;
+  display: inline-block;
+}
+.userName{
+
+  font-size: 28px;
+  display: block;
+}
+.email{
+  display: block;
+
+}
+.actTitle{
+  margin-top: 10px;
+  font-size: 28px;
+  border-style: none none solid none;
+  border-width: 1px;
+}
+.actNumber{
+  width: 10%;
+}
+.actAdress{
+  width: 60%;
+}
+.actDelete{
+  width: 30%;
+}
+.actHeader{
+  font-size: 18px;
+  border-style: none none solid none;
+  border-width: 1px;
+  border-collapse: collapse;
+}
+table{
+  width: 100%;
+}
+.people{
+  margin-left: 15%;
+  margin-right: 15%;
+  
+}
+
