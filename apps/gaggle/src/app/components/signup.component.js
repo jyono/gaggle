@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+const axios = require('axios').default;
 export default class SignUp extends Component {
 
     constructor(props) {
@@ -20,7 +20,19 @@ export default class SignUp extends Component {
     }
     
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.email);
+        // alert('A name was submitted: ' + this.state.email);
+
+        axios.post('http://localhost:4000/user', {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         event.preventDefault();
     }
 
