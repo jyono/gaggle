@@ -1,25 +1,9 @@
-#version: '3.5'
-#services:
-#  gaggle:
-#    image: gaggle
-#    environment:
-#      - apiPath=http://api:4000
-#    ports:
-#      - '4001:4001'
-#  api:
-#    image: api
-#    ports:
-#      - '4000:4000'
-#  postgres:
-#    image: 'postgres:latest'
-
-
 version: '3.5'
 services:
-#  postgres:
-#    image: 'postgres:latest'
-#    environment:
-#      - POSTGRES_PASSWORD=postgres_password
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
   nginx:
     depends_on:
       - api
@@ -32,10 +16,10 @@ services:
       - '3050:80'
   api:
     build:
-      dockerfile: Dockerfile
+      dockerfile: ./apps/api/Dockerfile.dev
       context: .
     volumes:
-      - ./apps/api:/gaggle/apps/api
+      - ./:/app
     environment:
       - PGUSER=postgres
       - PGHOST=postgres
@@ -48,13 +32,10 @@ services:
   gaggle:
     stdin_open: true
     build:
-      dockerfile: Dockerfile
+      dockerfile: ./apps/gaggle/Dockerfile.dev
       context: .
     volumes:
-      - ./apps/gaggle:/gaggle/apps/gaggle
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - ./:/app
     ports:
     - '4001:4001'
     command: [ 'npm', 'run', 'start-gaggle' ]

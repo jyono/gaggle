@@ -6,7 +6,18 @@ before_install:
   - docker build -t gaggle -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true gaggle nx run-many --target=test --all
+  - docker run -e CI=true gaggle npm run nx run-many --target=test --all
+
+after_success:
+  - docker build -t jordanyono/gaggle ./apps/gaggle
+  - docker build -t jordanyono/gaggle-api ./apps/api
+  - docker build -t jordanyono/gaggle-nginx ./nginx
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push jordanyono/gaggle
+  - docker push jordanyono/gaggle-api
+  - docker push jordanyono/gaggle-nginx
 
 deploy:
   provider: elasticbeanstalk
