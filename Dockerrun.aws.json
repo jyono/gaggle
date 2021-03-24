@@ -3,21 +3,21 @@
   "containerDefinitions": [
     {
       "name": "gaggle",
-      "image": "TODO",
+      "image": "jordanyono/gaggle",
       "hostname": "gaggle",
       "essential": false,
       "memory": 128
     },
     {
       "name": "api",
-      "image": "TODO",
+      "image": "jordanyono/gaggle-api",
       "hostname": "api",
       "essential": false,
       "memory": 128
     },
     {
       "name": "nginx",
-      "image": "TODO",
+      "image": "jordanyono/gaggle-nginx",
       "hostname": "nginx",
       "essential": true,
       "portMappings": [
