@@ -3,9 +3,9 @@ services:
   - docker
 
 script:
-  - docker build -t jordanyono/gaggle ./apps/gaggle
-  - docker build -t jordanyono/gaggle-api ./apps/api
-  - docker build -t jordanyono/gaggle-nginx ./nginx
+  - docker build -t jordanyono/gaggle ./apps/gaggle .
+  - docker build -t jordanyono/gaggle-api ./apps/api .
+  - docker build -t jordanyono/gaggle-nginx ./nginx .
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
