@@ -2,15 +2,14 @@ sudo: required
 services:
   - docker
 
-before_install:
-
+#before_install:
 #  - docker build -t gaggle -f ./Dockerfile.test .
 
 script:
 
-  - docker build -t jordanyono/gaggle -f ./apps/gaggle .
-  - docker build -t jordanyono/gaggle-api -f ./apps/api .
-  - docker build -t jordanyono/gaggle-nginx -f ./nginx .
+  - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
+  - docker build -t jordanyono/gaggle-api -f ./apps/api/Dockerfile .
+  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
