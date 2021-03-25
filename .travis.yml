@@ -2,12 +2,12 @@ sudo: required
 services:
   - docker
 
-before_install:
-# TODO get ci tests working
+#before_install:
+## TODO get ci tests working
 #  - docker build -t gaggle -f ./Dockerfile.test .
-
-script:
-#  TODO get CI tests working
+#
+#script:
+##  TODO get CI tests working
 #  - docker run -e CI=true gaggle npm run nx run-many --target=test --all
 
 after_success:
