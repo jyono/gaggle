@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t gaggle -f ./apps/gaggle/Dockerfile.dev ./apps/gaggle
+  - docker build -t gaggle -f ./apps/gaggle/Dockerfile.dev .
 
 script:
   - docker run -e CI=true gaggle npm run nx run-many --target=test --all
