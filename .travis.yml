@@ -6,9 +6,8 @@ services:
 #  - docker build -t gaggle -f ./Dockerfile.test .
 
 script:
-
-  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
   - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
+  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
   - docker build -t jordanyono/gaggle-api -f ./apps/api/Dockerfile .
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
