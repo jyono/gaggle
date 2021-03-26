@@ -18,7 +18,22 @@ script:
 
 #after_success:
 
+# TODO
+# Change back to main when done
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-east-1"
+#  app: "gaggle"
+#  env: "Gaggle-env-1"
+#  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
+#  bucket_path: "gaggle"
+#  on:
+#    branch: main
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
+#
 
+# TODO remove
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
@@ -27,6 +42,6 @@ deploy:
   bucket_name: "elasticbeanstalk-us-east-1-131738280727"
   bucket_path: "gaggle"
   on:
-    branch: main
+    branch: JY/more-deploy-work
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
