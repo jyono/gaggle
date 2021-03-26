@@ -3,7 +3,7 @@ WORKDIR '/app'
 COPY ./package.json ./
 RUN npm install
 COPY . .
-RUN npm run nx build:gaggle
+RUN npm run nx run gaggle:build
 
 FROM nginx
 EXPOSE 4001
