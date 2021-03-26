@@ -47,7 +47,8 @@
     "react-router-dom": "^5.2.0",
     "sequelize": "^6.5.1",
     "session": "^0.1.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "yargs-parser": "^20.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.9.6",
