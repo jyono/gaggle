@@ -21,11 +21,18 @@ export default class SignUp extends Component {
     
     handleSubmit(event) {
         // alert('A name was submitted: ' + this.state.email);
-
-        axios.post('http://localhost:4000/user', {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email
+        // axios.defaults.withCredentials = true;
+          axios({    
+            method: 'post',
+            url: '/api/user',
+            // url: 'http://localhost:4000',
+            // baseURL: 'http://localhost:4000',
+            data: {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email
+            },
+            // withCredentials: true
           })
           .then(function (response) {
             console.log(response);
@@ -33,7 +40,21 @@ export default class SignUp extends Component {
           .catch(function (error) {
             console.log(error);
           });
-        event.preventDefault();
+
+          event.preventDefault();
+          
+        //   fetch('/api/user', {
+        //     method: 'POST',
+        //     body: '',
+        //   })
+        //     .then((_) => _.json())
+        //     .then((newTodo) => {
+        //       setTodos([...todos, newTodo]);
+        //     });
+
+
+
+        
     }
 
 
