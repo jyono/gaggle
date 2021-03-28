@@ -15,10 +15,9 @@ const dbConfig = require("apps/api/src/app/db.config.js");
 
 // database
 const db_pos = require("./app/models/index_db");
-db_pos.USERS.sync();
+db_pos.USERS.sync({force: true});
 
-
-// session object
+// save session to the  
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -28,18 +27,6 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 var myStore = new SequelizeStore({
   db: sequelize,
 });
-
-app.use(
-  session({
-    secret: "keyboard cat",
-    store: myStore,
-    resave: false, // we support the touch method so per the express-session docs this should be set to false
-    proxy: true, // if you do SSL outside of node.
-  })
-);
-myStore.sync();
-
-
 
 
 
@@ -53,13 +40,8 @@ app.use(cors(corsOptions));
 //cookie
 app.use(cookieParser());
 
-//session
-// app.use(session({secret: "Your secret key"}));
-
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-
-
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -68,48 +50,71 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // const csrfProtection = csrf();
 // app.use(csrfProtection);
 // app.use(flash());
+app.use(
+  session({
+    secret: "keyboard cat",
+    store: myStore,
+    resave: false, // we support the touch method so per the express-session docs this should be set to false
+    proxy: true, // if you do SSL outside of node.
+  })
+);
+myStore.sync();
+
 
 app.use('/', function(req, res, next){
-
-  var name = '123';
-  // res.cookie(name, 'value', {expire: 360000 + Date.now()}); 
-  res.cookie(name, 'value', {maxAge: 360000}); 
-  //  res.cookie('name', 'express').send('cookie set'); 
-  // res.clearCookie('123');
-  // res.send('cookie foo cleared');
-  if(req.session.page_views){
-    req.session.page_views++;
-    res.send("You visited this page " + req.session.page_views + " times");
- } else {
-    req.session.page_views = 1;
-    res.send("Welcome to this page for the first time!");
- }
+  if (req.session.views) {
+    req.session.views++
+    res.setHeader('Content-Type', 'text/html')
+    res.write('<p>views: ' + req.session.views + '</p>')
+    res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+    res.end()
+  } else {
+    req.session.views = 1
+    res.end('welcome to the session demo. refresh!')
+  }
  console.log(req.session);
-  next();
+ next();
 });
 
-
-app.post('/api/user', (req, res) => {
-//   if(req.session.page_views){
-//     req.session.page_views++;
-//     res.send("You visited this page " + req.session.page_views + " times");
-//  } else {
-//     req.session.page_views = 1;
-//     res.send("Welcome to this page for the first time!");
-//  }
-  console.log("A request for things received at " + Date.now());
+// sign up
+app.post('/api/signUp', (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
+  const jane2 = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: password })
+  .then(function(user) {
+    // you can now access the newly created user
+    console.log('success', user.toJSON());
+  })
+ .catch(function(err) {
+    // print the error details
+    console.log(err, req.body.email);
+  });
+  // jane.save();
+  
+  // console.log(req.body.firstName);
 
 });
 
+app.post('/api/signIn', (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const user = db_pos.USERS.findByPk(email);
+  if(user == null) {
+      res.redirect('www.google.com');
+  }
 
+  // jane.save();
+  
+  // console.log(req.body.firstName);
 
-
+});
 
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
-
 
 
 // set port, listen for requests
@@ -118,17 +123,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-// const greeting: Message = { message: 'Welcome to api!' };
-
-// app.get('/api', (req, res) => {
-//   res.send(greeting);
-// });
-
-// const port = process.env.port || 4000;
-// const server = app.listen(port, () => {
-//   console.log('Listening at http://localhost:' + port + '/api');
-// });
-// server.on('error', console.error);
 
 
 

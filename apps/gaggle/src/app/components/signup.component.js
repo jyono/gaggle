@@ -7,6 +7,7 @@ export default class SignUp extends Component {
         this.state = {firstName: '',
          lastName: '',
          email: '',
+         password: ''
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -20,11 +21,9 @@ export default class SignUp extends Component {
     }
     
     handleSubmit(event) {
-        // alert('A name was submitted: ' + this.state.email);
-        // axios.defaults.withCredentials = true;
           axios({    
             method: 'post',
-            url: '/api/user',
+            url: '/api/signUp',
             // url: 'http://localhost:4000',
             // baseURL: 'http://localhost:4000',
             data: {
@@ -42,22 +41,8 @@ export default class SignUp extends Component {
           });
 
           event.preventDefault();
-          
-        //   fetch('/api/user', {
-        //     method: 'POST',
-        //     body: '',
-        //   })
-        //     .then((_) => _.json())
-        //     .then((newTodo) => {
-        //       setTodos([...todos, newTodo]);
-        //     });
-
-
-
         
     }
-
-
     render() {
         return (
             <form onSubmit={this.handleSubmit}>

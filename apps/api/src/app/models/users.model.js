@@ -7,10 +7,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING,
+        primaryKey: true,
       },
       password: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       }
     },{
       tableName: 'USERS'
