@@ -15,7 +15,7 @@ const dbConfig = require("apps/api/src/app/db.config.js");
 
 // database
 const db_pos = require("./app/models/index_db");
-db_pos.USERS.sync({force: true});
+db_pos.USERS.sync({alter: true});
 
 // save session to the  
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -62,16 +62,16 @@ myStore.sync();
 
 
 app.use('/', function(req, res, next){
-  if (req.session.views) {
-    req.session.views++
-    res.setHeader('Content-Type', 'text/html')
-    res.write('<p>views: ' + req.session.views + '</p>')
-    res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
-    res.end()
-  } else {
-    req.session.views = 1
-    res.end('welcome to the session demo. refresh!')
-  }
+  // if (req.session.views) {
+  //   req.session.views++
+  //   res.setHeader('Content-Type', 'text/html')
+  //   res.write('<p>views: ' + req.session.views + '</p>')
+  //   res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+  //   res.end()
+  // } else {
+  //   req.session.views = 1
+  //   res.end('welcome to the session demo. refresh!')
+  // }
  console.log(req.session);
  next();
 });
@@ -91,7 +91,7 @@ app.post('/api/signUp', (req, res) => {
     // print the error details
     console.log(err, req.body.email);
   });
-  // jane.save();
+  jane2.save();
   
   // console.log(req.body.firstName);
 
@@ -100,15 +100,22 @@ app.post('/api/signUp', (req, res) => {
 app.post('/api/signIn', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const user = db_pos.USERS.findByPk(email);
-  if(user == null) {
-      res.redirect('www.google.com');
-  }
 
-  // jane.save();
+  (async () => {
+    const user = await db_pos.USERS.findByPk(email);
+    if (user === null) {
+      res.send({user: "none"});
+      console.log('Not found!');
+    } else {
+      console.log(user instanceof db_pos.USERS); // true
+      console.log(user.email);
+      // Its primary key is 123
+    }
+  })();
   
-  // console.log(req.body.firstName);
-
+  // if(user == null) {
+  //     res.redirect('https://www.google.co.jp/?gfe_rd=cr&ei=JF-ZWNiHKqiL8Qfvz5KADg&gws_rd=ssl');
+  // }
 });
 
 // simple route

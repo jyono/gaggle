@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 const axios = require('axios').default;
+import { Redirect } from "react-router-dom";
 export default class Login extends Component {
     
     constructor(props) {
@@ -30,6 +31,11 @@ export default class Login extends Component {
           // withCredentials: true
         })
         .then(function (response) {
+            console.log(response)
+            if(response.data.user === 'none') {
+                console.log("redirsct")
+                return <Redirect to="/sign-up"/>
+            }
           console.log(response);
         })
         .catch(function (error) {
