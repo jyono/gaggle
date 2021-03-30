@@ -6,7 +6,8 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {email: '',
-         password: ''
+         password: '',
+         toSignUp: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -21,6 +22,7 @@ export default class Login extends Component {
     }
 
     handleSubmit(event) {
+        var self = this;
         axios({    
           method: 'post',
           url: '/api/signIn',
@@ -32,11 +34,13 @@ export default class Login extends Component {
         })
         .then(function (response) {
             console.log(response)
-            if(response.data.user === 'none') {
-                console.log("redirsct")
+            if(response.data.user === "none") {
+                self.setState({toSignUp: true});
+                // window.location = "/sign-up";
+                // console.log(this.state.toSignUp)
                 return <Redirect to="/sign-up"/>
             }
-          console.log(response);
+          console.log(response.data.user == 'none');
         })
         .catch(function (error) {
           console.log(error);
@@ -46,6 +50,9 @@ export default class Login extends Component {
   }
 
     render() {
+        if(this.state.toSignUp === true) {
+            return <Redirect to = {{ pathname: "/sign-up" }} />;
+        }
         return (
             <form onSubmit={this.handleSubmit}>
                 <h3>Sign In</h3>
