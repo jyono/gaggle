@@ -22,18 +22,18 @@
 const pg = require('pg');
 
 const pgConfig = {
-    user: 'postgres',           // 数据库用户名
-    database: 'test',       // 数据库
-    password: 'postgres',       // 数据库密码
-    host: 'localhost',        // 数据库所在IP
-    port: '5432'                // 连接端口
+    user: 'postgres',           
+    database: 'test',       
+    password: 'postgres',       
+    host: 'localhost',        
+    port: '5432'              
 };
 const pool = new pg.Pool(pgConfig);
 
 pool.connect(function(error, client, done) {
-    let sqlStr = 'SELECT * FROM company';      // 查表的SQL语句
+    let sqlStr = 'SELECT * FROM company';      
     client.query(sqlStr, [], function(err, response) {
         done();
-        console.log(response)  		  // 根据SQL语句查出的数据
+        console.log(response)  		  
     })
 })

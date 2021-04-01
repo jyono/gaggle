@@ -1,6 +1,7 @@
 // import * as express from 'express';
 // import { Message } from '@gaggle/api-interfaces';
 // const Message = require('@gaggle/api-interfaces')
+const bcrypt = require('bcrypt');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -82,16 +83,44 @@ app.post('/api/signUp', (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const jane2 = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: password })
-  .then(function(user) {
-    // you can now access the newly created user
-    console.log('success', user.toJSON());
-  })
- .catch(function(err) {
-    // print the error details
-    console.log(err, req.body.email);
-  });
-  jane2.save();
+  const saltRounds = 10;
+  // const salt = bcrypt.genSaltSync(saltRounds);
+  // var hash2 = bcrypt.hashSync(password, salt);
+  // console.log("i am hash2");
+  // console.log(hash2);
+
+
+
+
+
+      //  Store hash in your password DB.
+        console.log("i am hash2");
+        (async () => {
+          const salt = await bcrypt.genSalt(10);
+          const hash = bcrypt.hash('123456', salt);
+          const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password:await hash })
+        .then(function(user) {
+          // you can now access the newly created user
+          console.log('success', user.toJSON());
+        })
+        .catch(function(err) {
+          // print the error details
+        console.log(err, req.body.email);
+        });
+        })();
+
+        
+ 
+  // console.log(encryptPassword.Class);
+//   const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: password })
+//   .then(function(user) {
+//     // you can now access the newly created user
+//     console.log('success', user.toJSON());
+//   })
+//  .catch(function(err) {
+//     // print the error details
+//     console.log(err, req.body.email);
+//   });
   
   // console.log(req.body.firstName);
 
@@ -100,14 +129,13 @@ app.post('/api/signUp', (req, res) => {
 app.post('/api/signIn', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
+  const encryptPassword = bcrypt.hash(password, 12);
   (async () => {
     const user = await db_pos.USERS.findByPk(email);
     if (user === null) {
       res.send({user: "none"});
       console.log('Not found!');
-    } else {
-      console.log(user instanceof db_pos.USERS); // true
+    } else if (user.password === encryptPassword) {
       console.log(user.email);
       // Its primary key is 123
     }
