@@ -90,15 +90,10 @@ app.post('/api/signUp', (req, res) => {
   // console.log(hash2);
 
 
-
-
-
-      //  Store hash in your password DB.
-        console.log("i am hash2");
         (async () => {
           const salt = await bcrypt.genSalt(10);
-          const hash = bcrypt.hash('123456', salt);
-          const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password:await hash })
+          const hash = bcrypt.hash(password, salt);
+          const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: await hash })
         .then(function(user) {
           // you can now access the newly created user
           console.log('success', user.toJSON());
@@ -108,36 +103,24 @@ app.post('/api/signUp', (req, res) => {
         console.log(err, req.body.email);
         });
         })();
-
-        
- 
-  // console.log(encryptPassword.Class);
-//   const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: password })
-//   .then(function(user) {
-//     // you can now access the newly created user
-//     console.log('success', user.toJSON());
-//   })
-//  .catch(function(err) {
-//     // print the error details
-//     console.log(err, req.body.email);
-//   });
-  
-  // console.log(req.body.firstName);
-
 });
 
 app.post('/api/signIn', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const encryptPassword = bcrypt.hash(password, 12);
   (async () => {
+    const salt = await bcrypt.genSalt(10);
+    const hash = bcrypt.hash(password, salt);
     const user = await db_pos.USERS.findByPk(email);
+    console.log(await hash);
+    console.log(await hash);
     if (user === null) {
       res.send({user: "none"});
       console.log('Not found!');
-    } else if (user.password === encryptPassword) {
-      console.log(user.email);
-      // Its primary key is 123
+    } else if (user.password === await hash) {
+      console.log("This user is " + user.email);
+    } else {
+      console.log("error");
     }
   })();
   
