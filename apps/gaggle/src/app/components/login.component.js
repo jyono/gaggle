@@ -36,8 +36,6 @@ export default class Login extends Component {
             console.log(response)
             if(response.data.user === "none") {
                 self.setState({toSignUp: true});
-                // window.location = "/sign-up";
-                // console.log(this.state.toSignUp)
                 return <Redirect to="/sign-up"/>
             }
           console.log(response.data.user == 'none');

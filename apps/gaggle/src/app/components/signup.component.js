@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 const axios = require('axios').default;
+import { Redirect } from "react-router-dom";
 export default class SignUp extends Component {
 
     constructor(props) {
@@ -21,6 +22,7 @@ export default class SignUp extends Component {
     }
     
     handleSubmit(event) {
+        var self = this;
           axios({    
             method: 'post',
             url: '/api/signUp',
@@ -35,6 +37,10 @@ export default class SignUp extends Component {
             // withCredentials: true
           })
           .then(function (response) {
+            if(response.data.redirectToSignIn === true) {
+                self.setState({redirectToSignIn: true});
+                return <Redirect to="/sign-in"/>
+            }
             console.log(response);
           })
           .catch(function (error) {
@@ -45,6 +51,9 @@ export default class SignUp extends Component {
         
     }
     render() {
+        if(this.state.redirectToSignIn === true) {
+            return <Redirect to = {{ pathname: "/sign-in" }} />;
+        }
         return (
             <form onSubmit={this.handleSubmit}>
                 <h3>Sign Up</h3>

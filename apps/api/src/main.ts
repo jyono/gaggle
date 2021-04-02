@@ -85,13 +85,9 @@ app.post('/api/signUp', (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  console.log(req.body.email);
-  console.log(req.body.password);
 
         (async () => {
           const salt = await bcrypt.genSalt(10);
-          console.log(password);
-          console.log(email);
           const hash = await bcrypt.hash(password, salt);
           const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: hash })
           .then(function(user) {
@@ -100,6 +96,7 @@ app.post('/api/signUp', (req, res) => {
           })
           .catch(function(err) {
           // print the error details
+          res.send({redirectToSignIn: true})
           console.log(err, req.body.email);
           });
         })();
@@ -110,19 +107,14 @@ app.post('/api/signIn', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   (async () => {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
     const user = await db_pos.USERS.findByPk(email);
-    console.log("hash1 and hash2");
-    console.log(hash);
     if (user === null) {
       res.send({user: "none"});
       console.log('Not found!');
     } else if (bcrypt.compare(password, user.password)) {
-      // req.session.isAuth = true;
-      // req.session.user = email;
-      // sessionAuth(req, email);
+      sessionAuth(req, email);
       console.log("This user is " + user.email);
+      console.log(req.session);
     } else {
       console.log("error");
     }
