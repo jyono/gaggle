@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const app = express();
 var SequelizeStore = require("connect-session-sequelize")(session.Store);
 const dbConfig = require("apps/api/src/app/db.config.js");
+const sessionAuth = require("apps/api/src/app/models/auth.js");
 
 // database
 const db_pos = require("./app/models/index_db");
@@ -63,6 +64,7 @@ myStore.sync();
 
 
 app.use('/', function(req, res, next){
+
   // if (req.session.views) {
   //   req.session.views++
   //   res.setHeader('Content-Type', 'text/html')
@@ -83,26 +85,25 @@ app.post('/api/signUp', (req, res) => {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
-  const saltRounds = 10;
-  // const salt = bcrypt.genSaltSync(saltRounds);
-  // var hash2 = bcrypt.hashSync(password, salt);
-  // console.log("i am hash2");
-  // console.log(hash2);
-
+  console.log(req.body.email);
+  console.log(req.body.password);
 
         (async () => {
           const salt = await bcrypt.genSalt(10);
-          const hash = bcrypt.hash(password, salt);
-          const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: await hash })
-        .then(function(user) {
+          console.log(password);
+          console.log(email);
+          const hash = await bcrypt.hash(password, salt);
+          const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: hash })
+          .then(function(user) {
           // you can now access the newly created user
           console.log('success', user.toJSON());
-        })
-        .catch(function(err) {
+          })
+          .catch(function(err) {
           // print the error details
-        console.log(err, req.body.email);
-        });
+          console.log(err, req.body.email);
+          });
         })();
+
 });
 
 app.post('/api/signIn', (req, res) => {
@@ -110,23 +111,23 @@ app.post('/api/signIn', (req, res) => {
   const password = req.body.password;
   (async () => {
     const salt = await bcrypt.genSalt(10);
-    const hash = bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(password, salt);
     const user = await db_pos.USERS.findByPk(email);
-    console.log(await hash);
-    console.log(await hash);
+    console.log("hash1 and hash2");
+    console.log(hash);
     if (user === null) {
       res.send({user: "none"});
       console.log('Not found!');
-    } else if (user.password === await hash) {
+    } else if (bcrypt.compare(password, user.password)) {
+      // req.session.isAuth = true;
+      // req.session.user = email;
+      // sessionAuth(req, email);
       console.log("This user is " + user.email);
     } else {
       console.log("error");
     }
   })();
-  
-  // if(user == null) {
-  //     res.redirect('https://www.google.co.jp/?gfe_rd=cr&ei=JF-ZWNiHKqiL8Qfvz5KADg&gws_rd=ssl');
-  // }
+
 });
 
 // simple route

@@ -29,7 +29,8 @@ export default class SignUp extends Component {
             data: {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
-                email: this.state.email
+                email: this.state.email,
+                password: this.state.password
             },
             // withCredentials: true
           })
