@@ -1,24 +1,26 @@
 import React, { Component } from "react";
 const axios = require('axios').default;
-export default class SignUp extends Component {
+export default class SignUp extends Component<{}, {firstName: string, lastName:string, email: string}> {
 
     constructor(props) {
         super(props);
-        this.state = {firstName: '',
+        this.state = {
+          firstName: '',
          lastName: '',
          email: '',
         };
-    
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(event) {
         const name = event.target.name;
         this.setState({
-            [name]: event.target.value
+          [name]: event.target.value,
+          email: "", firstName: "", lastName: "",
         });
     }
-    
+
     handleSubmit(event) {
         // alert('A name was submitted: ' + this.state.email);
 

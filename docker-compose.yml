@@ -4,38 +4,81 @@ services:
     image: 'postgres:latest'
     environment:
       - POSTGRES_PASSWORD=postgres_password
-  nginx:
-    depends_on:
-      - api
-      - gaggle
-    restart: always
-    build:
-      dockerfile: Dockerfile
-      context: .
-    ports:
-      - '3050:80'
+#  nginx:
+#    depends_on:
+#      - api
+#      - gaggle
+#    restart: always
+#    build:
+#      dockerfile: ./nginx/Dockerfile
+#      context: .
+#    ports:
+#      - '3050:80'
+#  api:
+#    build:
+#      dockerfile: ./apps/api/Dockerfile
+#      context: .
+#    volumes:
+#      - /app/node_modules
+#      - ./:/app
+#    environment:
+#      - PGUSER=postgres
+#      - PGHOST=postgres
+#      - PGDATABASE=postgres
+#      - PGPASSWORD=postgres_password
+#      - PGPORT=5432
+#    ports:
+#    - '4000:4000'
+#    command: ['npm', 'run', 'start-api']
+#  gaggle:
+#    stdin_open: true
+#    build:
+#      dockerfile: ./apps/gaggle/Dockerfile
+#      context: .
+#    volumes:
+#      - /app/node_modules
+#      - ./:/app
+#    ports:
+#    - '4001:4001'
   api:
+    container_name: api
     build:
-      dockerfile: ./apps/api/Dockerfile.dev
       context: .
-    volumes:
-      - ./:/app
+      cache_from:
+        - my-base-image:nx-base
+      dockerfile: ./apps/api/Dockerfile
+      args:
+        NODE_ENV: "development"
+        BUILD_FLAG: ""
+    image: api:nx-dev
+    ports:
+      - 4000:4000
     environment:
-      - PGUSER=postgres
-      - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
-      - PGPORT=5432
-    ports:
-    - '4000:4000'
-    command: ['npm', 'run', 'start-api']
+      NODE_ENV: "development"
+      PORT: 4000
+    networks:
+      - corp
+    restart: on-failure
+
   gaggle:
-    stdin_open: true
+    container_name: gaggle
     build:
-      dockerfile: ./apps/gaggle/Dockerfile.dev
       context: .
-    volumes:
-      - ./:/app
+      cache_from:
+        - nginx:1.19.2
+      dockerfile: ./apps/gaggle/Dockerfile
+      args:
+        NODE_ENV: "development"
+        BUILD_FLAG: ""
+    image: gaggle:nx-dev
     ports:
-    - '4001:4001'
-    command: [ 'npm', 'run', 'start-gaggle' ]
+      - 4900:80
+    environment:
+      NODE_ENV: "development"
+      PORT: 4900
+    networks:
+      - corp
+    restart: on-failure
+networks:
+  corp:
+    driver: bridge

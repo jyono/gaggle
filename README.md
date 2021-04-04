@@ -1,9 +1,11 @@
-
-
 # Gaggle
+### Running locally with docker & docker-compose
+- build the base docker-image `docker build . -t my-base-image:nx-base`
+- run `docker-compose up` to run the containers and network
+- run `docker-compose down` to stop
 
+## Nx
 This project was generated using [Nx](https://nx.dev).
-
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**

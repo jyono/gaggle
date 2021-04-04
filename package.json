@@ -25,7 +25,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "start-gaggle": "nx run gaggle:serve --port=4001",
-    "start-api": "nx run api:serve --port=4000"
+    "start-api": "nx run api:serve"
   },
   "private": true,
   "dependencies": {

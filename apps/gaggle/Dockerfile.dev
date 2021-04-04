@@ -1,8 +1,0 @@
-FROM node:14.14.0-alpine
-WORKDIR '/app'
-COPY ./package.json ./
-RUN npm install
-COPY . .
-
-EXPOSE 4001
-RUN npm run nx run gaggle:serve
