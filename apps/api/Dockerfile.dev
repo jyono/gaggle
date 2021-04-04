@@ -4,4 +4,4 @@ COPY ./package.json ./
 RUN npm install
 COPY . .
 
-CMD ["npm", "run", "nx", "serve:api"]
+CMD ["npm", "run", "start-api"]

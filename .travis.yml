@@ -2,23 +2,38 @@ sudo: required
 services:
   - docker
 
-#before_install:
+before_install:
 #  - docker build -t gaggle -f ./Dockerfile.test .
-
+  - docker build . -t my-base-image:nx-base
 script:
   - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
-  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
+#  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
   - docker build -t jordanyono/gaggle-api -f ./apps/api/Dockerfile .
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push jordanyono/gaggle
+#  - docker push jordanyono/gaggle-nginx
   - docker push jordanyono/gaggle-api
-  - docker push jordanyono/gaggle-nginx
 
 #after_success:
 
+# TODO
+# Change back to main when done
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-east-1"
+#  app: "gaggle"
+#  env: "Gaggle-env-1"
+#  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
+#  bucket_path: "gaggle"
+#  on:
+#    branch: main
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
+#
 
+# TODO remove
 deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
@@ -27,6 +42,6 @@ deploy:
   bucket_name: "elasticbeanstalk-us-east-1-131738280727"
   bucket_path: "gaggle"
   on:
-    branch: main
+    branch: JY/more-deploy-work
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY

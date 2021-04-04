@@ -1,9 +1,15 @@
-FROM node:14.14.0-alpine
-WORKDIR "/app"
-COPY ./package.json ./
-RUN npm install
+FROM my-base-image:nx-base AS builder
+WORKDIR "/app/builder"
+
+ARG NODE_ENV
+ARG BUILD_FLAG
+WORKDIR /app/builder
 COPY . .
+RUN npm run nx build api ${BUILD_FLAG}
 
-RUN npm run nx build:api
+FROM my-base-image:nx-base
 
-CMD ["node", "./dist/api/main.js"]
+WORKDIR /app
+COPY --from=builder /app/builder ./
+ENV NODE_ENV=$NODE_ENV
+CMD ["node", "./dist/apps/api/main.js"]
