@@ -2,11 +2,6 @@ sudo: required
 services:
   - docker
 language: bash
-env:
-  global:
-    - LIVE_SERVICE: gaggle-production
-    - LIVE_CLUSTER_NAME: gaggle-production
-    - LIVE_APP_NAME: "https://hub.docker.com/repository/docker/jordanyono/gaggle-api"
 on:
   branch: JY/aws-travis
 access_key_id: $AWS_ACCESS_KEY
@@ -53,4 +48,4 @@ script:
 
 
 after_success:
-  - docker-deploy/ecs.sh -c gaggle-production -n gaggle-production -i ""https://hub.docker.com/repository/docker/jordanyono/gaggle-api":latest" -r us-east-1 -t 240
+  - docker-deploy/ecs.sh -c gaggle-production -n gaggle-production -i "https://hub.docker.com/repository/docker/jordanyono/gaggle-api:latest" -r "us-east-1" -t 240
