@@ -1,6 +1,16 @@
 sudo: required
 services:
   - docker
+language: bash
+env:
+  global:
+    - LIVE_SERVICE: gaggle-production
+    - LIVE_CLUSTER_NAME: gaggle-production
+    - LIVE_APP_NAME: "https://hub.docker.com/repository/docker/jordanyono/gaggle-api"
+on:
+  branch: JY/aws-travis
+access_key_id: $AWS_ACCESS_KEY
+secret_access_key: $AWS_SECRET_KEY
 
 before_install:
 #  - docker build -t gaggle -f ./Dockerfile.test .
@@ -34,14 +44,13 @@ script:
 #
 
 # TODO remove
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "gaggle"
-  env: "Gaggle-env-1"
-  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
-  bucket_path: "gaggle"
-  on:
-    branch: JY/aws-travis
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+#  provider: elasticbeanstalk
+#  region: "us-east-1"
+#  app: "gaggle"
+#  env: "Gaggle-env-1"
+#  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
+#  bucket_path: "gaggle"
+
+
+after_success:
+  - docker-deploy/ecs.sh -c gaggle-production -n gaggle-production -i ""https://hub.docker.com/repository/docker/jordanyono/gaggle-api":latest" -r us-east-1 -t 240
