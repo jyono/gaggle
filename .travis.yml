@@ -41,7 +41,7 @@ deploy:
   app: 'gaggle-production'
   env: 'Gaggleproduction-env'
   bucket_name: 'elasticbeanstalk-us-east-1-131738280727'
-  bucket_path: '.elasticbeanstalk'
+  bucket_path: 'gaggle'
   on:
     branch: JY/aws-travis
   access_key_id: $AWS_ACCESS_KEY
