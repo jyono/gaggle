@@ -7,10 +7,10 @@ language: bash
 #access_key_id: $AWS_ACCESS_KEY
 #secret_access_key: $AWS_SECRET_KEY
 
-before_install:
+#before_install:
 #  - docker build -t gaggle -f ./Dockerfile.test .
   # Build a base image for the application/api
-  - docker build . -t my-base-image:nx-base
+#  - docker build . -t my-base-image:nx-base
 script:
   - docker build . -t my-base-image:nx-base
 #
