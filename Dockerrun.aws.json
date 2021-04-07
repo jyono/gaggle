@@ -9,7 +9,7 @@
       "memory": 128
     },
     {
-      "name": "server",
+      "name": "api",
       "image": "jordanyono/gaggle-api",
       "hostname": "api",
       "essential": false,
@@ -26,7 +26,7 @@
           "containerPort": 80
         }
       ],
-      "links": ["gaggle", "server"],
+      "links": ["gaggle", "api"],
       "memory": 128
     }
   ]
