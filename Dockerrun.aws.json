@@ -6,14 +6,26 @@
       "image": "jordanyono/gaggle",
       "hostname": "gaggle",
       "essential": false,
-      "memory": 128
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 3050
+        }
+      ]
     },
     {
       "name": "server",
       "image": "jordanyono/gaggle-api",
       "hostname": "api",
       "essential": false,
-      "memory": 128
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 4000,
+          "containerPort": 4000
+        }
+      ]
     },
     {
       "name": "nginx",

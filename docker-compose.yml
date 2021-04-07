@@ -13,7 +13,7 @@ services:
       dockerfile: ./nginx/Dockerfile
       context: .
     ports:
-      - '80:80'
+      - '3050:80'
 #    networks:
 #      - corp
 #  api:
