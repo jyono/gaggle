@@ -3,17 +3,19 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - POSTGRES_PASSWORD=postgres_password
-#  nginx:
-#    depends_on:
-#      - api
-#      - gaggle
-#    restart: always
-#    build:
-#      dockerfile: ./nginx/Dockerfile
-#      context: .
-#    ports:
-#      - '3050:80'
+     POSTGRES_PASSWORD: postgres_password
+  nginx:
+    depends_on:
+      - api
+      - gaggle
+    restart: always
+    build:
+      dockerfile: ./nginx/Dockerfile
+      context: .
+    ports:
+      - '80:80'
+#    networks:
+#      - corp
 #  api:
 #    build:
 #      dockerfile: ./apps/api/Dockerfile
@@ -56,10 +58,14 @@ services:
     environment:
       NODE_ENV: "development"
       PORT: 4000
-    networks:
-      - corp
+      PGUSER: postgres
+      PGHOST: postgres
+      PGDATABASE: postgres
+      PGPASSWORD: postgrespassword
+      PGPORT: 5432
+#    networks:
+#      - corp
     restart: on-failure
-
   gaggle:
     container_name: gaggle
     build:
@@ -70,15 +76,14 @@ services:
       args:
         NODE_ENV: "development"
         BUILD_FLAG: ""
-    image: gaggle:nx-dev
     ports:
       - 4900:80
     environment:
       NODE_ENV: "development"
       PORT: 4900
-    networks:
-      - corp
+#    networks:
+#      - corp
     restart: on-failure
-networks:
-  corp:
-    driver: bridge
+#networks:
+#  corp:
+#    driver: bridge

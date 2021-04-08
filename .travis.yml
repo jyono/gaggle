@@ -1,23 +1,51 @@
 sudo: required
 services:
   - docker
+language: bash
+#on:
+#  branch: JY/aws-travis
+#access_key_id: $AWS_ACCESS_KEY
+#secret_access_key: $AWS_SECRET_KEY
 
-before_install:
+#before_install:
 #  - docker build -t gaggle -f ./Dockerfile.test .
-  - docker build . -t my-base-image:nx-base
+  # Build a base image for the application/api
+#  - docker build . -t my-base-image:nx-base
 script:
-  - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
-#  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
-  - docker build -t jordanyono/gaggle-api -f ./apps/api/Dockerfile .
-  # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
-  - docker push jordanyono/gaggle
-#  - docker push jordanyono/gaggle-nginx
-  - docker push jordanyono/gaggle-api
+  - docker build . -t my-base-image:nx-base
+#
+#  - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
+##  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
+#  - docker build -t jordanyono/gaggle-api -f ./apps/api/Dockerfile .
+#  # Log in to the docker CLI
+#  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#  # Take those images and push them to docker hub
+#  - docker push jordanyono/gaggle
+##  - docker push jordanyono/gaggle-nginx
+#  - docker push jordanyono/gaggle-api
 
-#after_success:
+after_success:
+  - docker-compose build nginx api gaggle
+  # tag the images so we can push them to docker hub
+  - docker image tag gaggle_gaggle jordanyono/gaggle:latest
+  - docker image tag gaggle_api jordanyono/gaggle-api:latest
+  - docker image tag gaggle_nginx jordanyono/gaggle-nginx:latest
+  # Push the images to dockerhub
+  - docker push jordanyono/gaggle:latest
+  - docker push jordanyono/gaggle-api:latest
+  - docker push jordanyono/gaggle-nginx:latest
 
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'gaggle-production-v4'
+  env: 'Gaggleproductionv4-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-131738280727'
+  bucket_path: 'gaggle'
+  on:
+    branch: JY/aws-travis
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
 # TODO
 # Change back to main when done
 #deploy:
@@ -34,14 +62,13 @@ script:
 #
 
 # TODO remove
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "gaggle"
-  env: "Gaggle-env-1"
-  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
-  bucket_path: "gaggle"
-  on:
-    branch: JY/more-deploy-work
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+#  provider: elasticbeanstalk
+#  region: "us-east-1"
+#  app: "gaggle"
+#  env: "Gaggle-env-1"
+#  bucket_name: "elasticbeanstalk-us-east-1-131738280727"
+#  bucket_path: "gaggle"
+
+
+#after_success:
+##  - docker-deploy/ecs.sh  -k "$AWS_ACCESS_KEY" -s "$AWS_SECRET_KEY" -c gaggle-production -n gaggle-production -i "jordanyono/gaggle-api:latest" -r "us-east-1" -t 240
