@@ -26,3 +26,4 @@ WORKDIR /usr/share/nginx/html
 
 COPY --from=builder /app/builder/dist/apps/gaggle ./
 COPY --from=builder /app/builder/apps/gaggle/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 4900

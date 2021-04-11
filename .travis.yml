@@ -43,7 +43,7 @@ deploy:
   bucket_name: 'elasticbeanstalk-us-east-1-131738280727'
   bucket_path: 'gaggle'
   on:
-    branch: JY/aws-travis
+    branch: JY/fixing-aws-deploy
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
 # TODO
