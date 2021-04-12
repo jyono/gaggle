@@ -1,59 +1,45 @@
 import React, { Component } from "react";
 const axios = require('axios').default;
-import { Redirect } from "react-router-dom";
-export default class SignUp extends Component {
+export default class SignUp extends Component<{}, {firstName: string, lastName:string, email: string}> {
 
     constructor(props) {
         super(props);
-        this.state = {firstName: '',
+        this.state = {
+          firstName: '',
          lastName: '',
          email: '',
-         password: ''
         };
-    
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(event) {
         const name = event.target.name;
         this.setState({
-            [name]: event.target.value
+          [name]: event.target.value,
+          email: "", firstName: "", lastName: "",
         });
     }
-    
+
     handleSubmit(event) {
-        var self = this;
-          axios({    
-            method: 'post',
-            url: '/api/signUp',
-            // url: 'http://localhost:4000',
-            // baseURL: 'http://localhost:4000',
-            data: {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                password: this.state.password
-            },
-            // withCredentials: true
+        // alert('A name was submitted: ' + this.state.email);
+
+        axios.post('http://localhost:4000/user', {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email
           })
           .then(function (response) {
-            if(response.data.redirectToSignIn === true) {
-                self.setState({redirectToSignIn: true});
-                return <Redirect to="/sign-in"/>
-            }
             console.log(response);
           })
           .catch(function (error) {
             console.log(error);
           });
-
-          event.preventDefault();
-        
+        event.preventDefault();
     }
+
+
     render() {
-        if(this.state.redirectToSignIn === true) {
-            return <Redirect to = {{ pathname: "/sign-in" }} />;
-        }
         return (
             <form onSubmit={this.handleSubmit}>
                 <h3>Sign Up</h3>

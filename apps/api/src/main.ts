@@ -33,11 +33,11 @@ var myStore = new SequelizeStore({
 
 
 //cors
-var corsOptions = {
-  // credentials: 'true',
-  origin: "http://localhost:4200"
-};
-app.use(cors(corsOptions));
+// var corsOptions = {
+//   // credentials: 'true',
+//   origin: "http://localhost:3000"
+// };
+app.use(cors());
 
 //cookie
 app.use(cookieParser());
@@ -64,18 +64,6 @@ myStore.sync();
 
 
 app.use('/', function(req, res, next){
-
-  // if (req.session.views) {
-  //   req.session.views++
-  //   res.setHeader('Content-Type', 'text/html')
-  //   res.write('<p>views: ' + req.session.views + '</p>')
-  //   res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
-  //   res.end()
-  // } else {
-  //   req.session.views = 1
-  //   res.end('welcome to the session demo. refresh!')
-  // }
- console.log(req.session);
  next();
 });
 
@@ -113,8 +101,12 @@ app.post('/api/signIn', (req, res) => {
       console.log('Not found!');
     } else if (bcrypt.compare(password, user.password)) {
       sessionAuth(req, email);
+      res.cookie('name', user.firstName);
+      res.send({user: user.firstName});
+      console.log("This user is " + user.firstName);
       console.log("This user is " + user.email);
       console.log(req.session);
+      console.log(user);
     } else {
       console.log("error");
     }
