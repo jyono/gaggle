@@ -12,7 +12,6 @@
 #
 
 FROM my-base-image:nx-base AS builder
-WORKDIR "/app/builder"
 
 ARG NODE_ENV
 ARG BUILD_FLAG

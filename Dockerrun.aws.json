@@ -13,15 +13,10 @@
         }
       ],
       "essential": false,
+      "hostname": "api",
       "image": "jordanyono/gaggle-api",
       "memory": 128,
-      "name": "api",
-      "portMappings": [
-        {
-          "containerPort": 4000,
-          "hostPort": 4000
-        }
-      ]
+      "name": "api"
     },
     {
       "environment": [
@@ -36,14 +31,9 @@
       ],
       "essential": false,
       "name": "gaggle",
+      "hostname": "gaggle",
       "image": "jordanyono/gaggle",
-      "memory": 128,
-      "portMappings": [
-        {
-          "containerPort": 80,
-          "hostPort": 4900
-        }
-      ]
+      "memory": 128
     },
     {
       "essential": true,
