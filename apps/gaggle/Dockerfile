@@ -23,7 +23,6 @@ RUN npm run nx build gaggle ${BUILD_FLAG}
 FROM nginx:1.19.2
 
 WORKDIR /usr/share/nginx/html
-
+EXPOSE 4900
 COPY --from=builder /app/builder/dist/apps/gaggle ./
 COPY --from=builder /app/builder/apps/gaggle/nginx.conf /etc/nginx/nginx.conf
-EXPOSE 4900
