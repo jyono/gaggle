@@ -19,7 +19,7 @@ WORKDIR /app/builder
 COPY . .
 RUN npm run nx build gaggle ${BUILD_FLAG}
 
-FROM nginx:1.19.2
+FROM nginx
 
 WORKDIR /usr/share/nginx/html
 EXPOSE 3000
