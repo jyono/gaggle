@@ -33,7 +33,13 @@
       "name": "gaggle",
       "hostname": "gaggle",
       "image": "jordanyono/gaggle",
-      "memory": 128
+      "memory": 128,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ]
     },
     {
       "essential": true,
