@@ -25,11 +25,14 @@ script:
 #  - docker push jordanyono/gaggle-api
 
 after_success:
-  - docker-compose build nginx api gaggle
-  # tag the images so we can push them to docker hub
-  - docker image tag gaggle_gaggle jordanyono/gaggle
-  - docker image tag gaggle_api jordanyono/gaggle-api
-  - docker image tag gaggle_nginx jordanyono/gaggle-nginx
+  - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
+  - docker build -t jordanyono/gaggle-api ./apps/api/Dockerfile .
+  - docker build -t jordanyono/gaggle-nginx ./nginx/Dockerfile .
+  #  - docker-compose build nginx api gaggle
+#  # tag the images so we can push them to docker hub
+#  - docker image tag gaggle_gaggle jordanyono/gaggle
+#  - docker image tag gaggle_api jordanyono/gaggle-api
+#  - docker image tag gaggle_nginx jordanyono/gaggle-nginx
   # Push the images to dockerhub
   - docker push jordanyono/gaggle
   - docker push jordanyono/gaggle-api
