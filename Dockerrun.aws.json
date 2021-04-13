@@ -2,44 +2,57 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "gaggle",
-      "image": "jordanyono/gaggle",
-      "hostname": "gaggle",
-      "essential": false,
-      "memory": 128,
-      "portMappings": [
+      "environment": [
         {
-          "hostPort": 4900,
-          "containerPort": 80
-        }
-      ]
-    },
-    {
-      "name": "api",
-      "image": "jordanyono/gaggle-api",
-      "hostname": "api",
-      "essential": false,
-      "memory": 128,
-      "portMappings": [
+          "name": "NODE_ENV",
+          "value": "production"
+        },
         {
-          "hostPort": 4000,
-          "containerPort": 4000
-        }
-      ]
-    },
-    {
-      "name": "nginx",
-      "image": "jordanyono/gaggle-nginx",
-      "hostname": "nginx",
-      "essential": true,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 80
+          "name": "PORT",
+          "value": "4000"
         }
       ],
-      "links": ["gaggle", "api"],
-      "memory": 128
+      "essential": false,
+      "hostname": "api",
+      "image": "jordanyono/gaggle-api",
+      "memory": 128,
+      "name": "api"
+    },
+    {
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "3000"
+        }
+      ],
+      "essential": false,
+      "name": "gaggle",
+      "hostname": "gaggle",
+      "image": "jordanyono/gaggle",
+      "memory": 128,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000
+        }
+      ]
+    },
+    {
+      "essential": true,
+      "name": "nginx",
+      "image": "jordanyono/gaggle-nginx",
+      "memory": 128,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ],
+      "links": ["gaggle", "api"]
     }
   ]
 }
