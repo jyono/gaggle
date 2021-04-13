@@ -26,8 +26,8 @@ script:
 
 after_success:
   - docker build -t jordanyono/gaggle -f ./apps/gaggle/Dockerfile .
-  - docker build -t jordanyono/gaggle-api ./apps/api/Dockerfile .
-  - docker build -t jordanyono/gaggle-nginx ./nginx/Dockerfile .
+  - docker build -t jordanyono/gaggle-api -f ./apps/api/Dockerfile .
+  - docker build -t jordanyono/gaggle-nginx -f ./nginx/Dockerfile .
   #  - docker-compose build nginx api gaggle
 #  # tag the images so we can push them to docker hub
 #  - docker image tag gaggle_gaggle jordanyono/gaggle
