@@ -50,11 +50,11 @@ services:
         - my-base-image:nx-base
       dockerfile: ./apps/api/Dockerfile
       args:
-        NODE_ENV: "development"
+        NODE_ENV: "production"
         BUILD_FLAG: ""
     image: api:nx-dev
     environment:
-      NODE_ENV: "development"
+      NODE_ENV: "production"
       PORT: 4000
       PGUSER: postgres
       PGHOST: postgres
@@ -69,13 +69,13 @@ services:
     build:
       context: .
       cache_from:
-        - nginx:1.19.2
+        - my-base-image:nx-base
       dockerfile: ./apps/gaggle/Dockerfile
       args:
-        NODE_ENV: "development"
+        NODE_ENV: "production"
         BUILD_FLAG: ""
     environment:
-      NODE_ENV: "development"
+      NODE_ENV: "production"
       PORT: 3000
 #    networks:
 #      - corp

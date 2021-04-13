@@ -5,7 +5,7 @@
       "environment": [
         {
           "name": "NODE_ENV",
-          "value": "development"
+          "value": "production"
         },
         {
           "name": "PORT",
@@ -22,7 +22,7 @@
       "environment": [
         {
           "name": "NODE_ENV",
-          "value": "development"
+          "value": "production"
         },
         {
           "name": "PORT",
