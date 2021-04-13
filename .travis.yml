@@ -38,8 +38,8 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   region: 'us-east-1'
-  app: 'gaggle-production-v4'
-  env: 'Gaggleproductionv4-env'
+  app: 'gaggle-production-v7'
+  env: 'Gaggleproductionv7-env'
   bucket_name: 'elasticbeanstalk-us-east-1-131738280727'
   bucket_path: 'gaggle'
   on:
