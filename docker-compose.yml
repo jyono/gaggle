@@ -76,7 +76,7 @@ services:
         BUILD_FLAG: ""
     environment:
       NODE_ENV: "development"
-      PORT: 4900
+      PORT: 3000
 #    networks:
 #      - corp
     restart: on-failure
