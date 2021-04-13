@@ -34,6 +34,7 @@ after_success:
 #  - docker image tag gaggle_api jordanyono/gaggle-api
 #  - docker image tag gaggle_nginx jordanyono/gaggle-nginx
   # Push the images to dockerhub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push jordanyono/gaggle
   - docker push jordanyono/gaggle-api
   - docker push jordanyono/gaggle-nginx
