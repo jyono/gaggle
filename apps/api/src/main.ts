@@ -80,6 +80,7 @@ app.post('/api/signUp', (req, res) => {
           const newUser = db_pos.USERS.create({ firstName: firstName,lastName: lastName, email: email, password: hash })
           .then(function(user) {
           // you can now access the newly created user
+          res.send({toProfile: true});
           console.log('success', user.toJSON());
           })
           .catch(function(err) {
